@@ -1,21 +1,25 @@
-echo "Guessing game"
-echo"Guess the number of files in directory"
-wccount=$(ls-la |wc-1)
-function qn {
-echo "Enter number of files in directory"
-read num
+#!/usr/bin/env bash
+
+echo "[Welcome to Guessing game]"
+
+function ask {
+	echo "Guess how many files are in the current directory:"
+	read guess
+    files=$(ls -1 | wc -l)
 }
-while [[$num -ne $wcount]]
+
+ask
+
+while [[ $guess -ne $files ]]
 do
-qn
-if[[$num -gt $wcount]]
-then
-echo "The number of files you guessed is greater than the original number of files"
-elif [[$num -lt $wcount]]
-then
-echo "The number of files you guessed is smaller than the original number of files"
-else 
-echo "The number of files you guessed is wrong"
-fi
+	if [[ $guess -lt $files ]] 
+	then
+		echo "Too low."
+	else
+		echo "Too high."
+	fi
+	ask
 done
-echo "The game of guessing directory is almost done"
+
+echo "Congratulations! You guessed correct, here is the list of files:"
+echo "---" && ls -1
